@@ -9,7 +9,6 @@ const InvalidText = styled.div`
   color: red;
 `
 
-
 const SignUpPage = () => {
     const navigate = useNavigate();
     const [getError, setError] = useState("")
@@ -33,7 +32,8 @@ const SignUpPage = () => {
         
 
     const SignUpContinueAction = async () => {
-      // makes POST request to /api/v1/login with JSON from entered username & password
+
+      // makes POST request to /api/v1/create-account with JSON from entered email, username & password
     const res = await fetch('/api/v1/create-account', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
@@ -43,16 +43,16 @@ const SignUpPage = () => {
           password: document.getElementById('password').value}
       )})
       
-      // read /api/v1/login request response
+      // read /api/v1/create-account request response
       const data = await res.json()
   
-      // if error = "", then their login was correct
-      // if error is anything else, then their login was incorrect
+      // if error = "", then their input was valid
+      // if error is anything else, then their input was invalid
       if (data.error) {
-        // triggers state update to show red invalid text
+        // triggers state update to show red error message
         setError(data.error)
       } else {
-        // if username & password is correct, continue to main matchmaking page
+        // if input is valid, continue to profile set up page
         // cookie will be set
         navigate('/setup/bio')
       }
@@ -66,7 +66,7 @@ const SignUpPage = () => {
             <TextInput LabelText="Create Username" PlaceholderText="Username" Id="username" />
             <TextInput LabelText="Create Password" PlaceholderText="Password" Id="password" />
 
-            {/* this element only shows if isInvalid is true (by default its false) */}
+            {/* this element only shows if getError has an error */}
             { getError && <InvalidText>{getError}</InvalidText>}
             
             <Button Text="CONTINUE" Action={SignUpContinueAction}/>
