@@ -10,7 +10,7 @@ const RiotStyleLabel = styled.label`
 const TextInput = props => {
 
   const getInputType = () => {
-    if (props.PlaceholderText == "Password") {
+    if (props.PlaceholderText === "Password") {
       return "password"
     }
     return "text"

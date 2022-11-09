@@ -61,7 +61,7 @@ const ProfileView = props => {
 
           <Ranks>
             <ul>
-              <li>League of Legends: Gold IV</li>
+              <li>League of Legends: Diamond IV</li>
               <li>VALORANT: Plat 3</li>
               <li>Teamfight Tactics: Unranked</li>
             </ul>
