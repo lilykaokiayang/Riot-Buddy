@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ProfileView from '../components/ProfileView'
-//import PropTypes from 'prop-types'
+import Logout from '../components/Logout'
 
 const MyProfilePage = () => {
   const location = useLocation()
+  const navigate = useNavigate()
 
   const [profile, setProfile] = useState({})
 
@@ -20,7 +21,7 @@ const MyProfilePage = () => {
       const data = await res.json()
 
       if (data.error) {
-        console.log(data.error)
+        navigate('/log-in')
       } else {
         // do if no error
         setProfile(data.profile)
@@ -31,6 +32,7 @@ const MyProfilePage = () => {
 
   return (
     <>
+      <Logout/>
       <Link style={linkStyle} to='/profile/edit'>Edit Profile</Link> 
       <Link style={linkStyle} to='/matchmaking'>Matchmaking</Link> 
 
@@ -43,7 +45,5 @@ const MyProfilePage = () => {
     </>
   )
 }
-
-//MyProfilePage.propTypes = {}
 
 export default MyProfilePage

@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ProfileView from '../components/ProfileView'
-//import PropTypes from 'prop-types'
 import CircularButton from '../components/CircularButton'
+import Logout from '../components/Logout'
 
 const MatchmakingPage = () => {
   const navigate = useNavigate()
@@ -15,20 +15,6 @@ const MatchmakingPage = () => {
     float: 'right',
   }
 
-  const handleLogout = async () => {
-    console.log('Link clicked');
-
-    const res = await fetch('/api/v1/logout')
-
-    const data = await res.json()
-
-    if (data.error) {
-      console.log('error logging out', data.error)
-    } else {
-      navigate('/log-in')
-    }
-  };
-
   useEffect(() => {
     async function getProfile() {
       const res = await fetch('/api/v1/profile/7')
@@ -36,9 +22,9 @@ const MatchmakingPage = () => {
       const data = await res.json()
 
       if (data.error) {
+        // user is logged out, send them back to login page
         navigate('/log-in')
       } else {
-        // do if no error
         setProfile(data.profile)
       }
     }
@@ -47,9 +33,9 @@ const MatchmakingPage = () => {
 
   return (
     <>
-      <Link style={linkStyle} onClick={handleLogout}>Log out</Link>
-      <Link style={linkStyle} to='/profile'>Profile</Link> 
-      <Link style={linkStyle} to='/messaging'>Messaging</Link>
+      <Logout/>
+      <Link style={linkStyle} to='/profile'>My Profile</Link> 
+      {/*<Link style={linkStyle} to='/messaging'>Messaging</Link>*/}
       <Link style={linkStyle} to='/matchmaking'>Matchmaking</Link> 
 
       <ProfileView 
@@ -66,7 +52,5 @@ const MatchmakingPage = () => {
     </>
   )
 }
-
-//MatchmakingPage.propTypes = {}
 
 export default MatchmakingPage

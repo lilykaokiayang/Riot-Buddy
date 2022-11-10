@@ -17,13 +17,13 @@ function App() {
         <Routes>
           <Route exact path="/" element={<WelcomePage/>} />
 
-          <Route path="/log-in" element={<LoginPage/>} />
+          <Route exact path="/log-in" element={<LoginPage/>} />
 
-          <Route path="/matchmaking" element={<MatchmakingPage/>} />
+          <Route exact path="/matchmaking" element={<MatchmakingPage/>} />
 
-          <Route path="/sign-up" element={<SignUpPage/>} />
-          <Route path="/setup/bio" element={<SetUpBioPage/>} />
-          <Route path="/setup/games" element={<SetUpGamesPage/>} />
+          <Route exact path="/sign-up" element={<SignUpPage/>} />
+          <Route exact path="/setup/bio" element={<SetUpBioPage/>} />
+          <Route exact path="/setup/games" element={<SetUpGamesPage/>} />
 
           <Route path="/profile" element={<MyProfilePage/>}  />
           {/*<Route path="/profile/edit" element={<EditProfilePage/>} />*/}

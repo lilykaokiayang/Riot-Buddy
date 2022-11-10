@@ -1,6 +1,4 @@
 import React from 'react';
-//import PropTypes from 'prop-types'
-//import styled from 'styled-components';
 import Button from '../components/Button';
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +6,18 @@ import { useNavigate } from "react-router-dom";
 const WelcomePage = () => {
   const navigate = useNavigate();
 
-  const LoginAction = () => {
-    navigate('/log-in');
+  const LoginAction = async () => {
+    // checks if the user is already logged in or not
+    const res = await fetch('/api/v1/whoami')
+    const data = await res.json()
+    if (data.username) {
+      // if server responded with a username, skip login
+      navigate('/matchmaking')
+    } else {
+      // otherwise, they dont have a valid session and need to be logged in
+      navigate('/log-in')
+    }
+    
   }
 
   const SignUpAction = () => {
