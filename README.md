@@ -37,7 +37,7 @@
   - response:
     - string: username
 
-- [ ] POST /api/v1/profile
+- [x] POST /api/v1/profile
   - description:
     - used to create the users profile
   - request:
@@ -45,7 +45,6 @@
     - string: name
     - string: bio
     - string: pronouns
-    - string: availability (optional, json)
     - integer: age
     - integer: photo id (optional)
     - integer: competitiveness (1-10)
@@ -60,24 +59,36 @@
     - string: name
     - string: bio
     - string: pronouns
-    - string: availability (json)
     - integer: age
     - integer: photo id
     - integer: competitiveness (1-10)
   - response:
     - string: error (empty if no error)
 
-- [ ] GET /api/v1/profile
+- [x] GET /api/v1/profile
   - description:
-    - used to retrieve a user's profile
+    - used to retrieve the users profile
   - request:
     - (header) session cookie
-    - integer: profile id
   - response: 
     - string: name
     - string: bio
     - string: pronouns
-    - string: availability (json)
     - integer: age
     - integer: photo id (may be empty)
     - integer: competitiveness (1-10)
+
+- [x] GET /api/v1/profile/<int:profileid>
+  - description:
+    - used to retrieve another users profile
+  - request:
+    - (header) session cookie
+    - integer: profileid (in url)
+  - response: 
+    - string: name
+    - string: bio
+    - string: pronouns
+    - integer: age
+    - integer: photo id (may be empty)
+    - integer: competitiveness (1-10)
+

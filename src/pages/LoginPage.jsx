@@ -28,7 +28,7 @@ const LoginPage = () => {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, []);
+  });
 
 
   const SubmitLoginAction = async () => {

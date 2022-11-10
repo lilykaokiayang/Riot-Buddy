@@ -1,7 +1,7 @@
 """Server for Riot Buddy"""
 
 import os
-from flask import Flask, send_from_directory, request, jsonify, make_response
+from flask import Flask, send_from_directory, request, jsonify, make_response, redirect
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -90,7 +90,6 @@ class Profile(db.Model):
     age = db.Column(db.Integer, nullable=False)
     bio = db.Column(db.Text, nullable=False)
     casual_competitive_score = db.Column(db.Integer, nullable=False)
-    availability = db.Column(db.String(255), nullable=False)
 
     user = db.relationship('User', back_populates='profile')
     photos = db.relationship('Photo', back_populates='profile')
@@ -208,5 +207,112 @@ def logout():
     logout_user()
     return make_response(jsonify(error=""), 200)
 
+@app.route('/api/v1/profile', methods=['POST'])
+@login_required
+def createprofile():
+
+  data = request.get_json()
+
+  # name validation
+  name = data['name']
+
+  if name == "":
+    return make_response(jsonify(error="Name cannot be blank"), 200)
+
+  if len(name) > 50:
+    return make_response(jsonify(error="Name cannot be longer than 50 characters"), 200)
+  
+  for char in name:
+    if char not in string.ascii_letters:
+      return make_response(jsonify(error="Name must only contain letters"), 200)
+
+  if len(name) < 2:
+    return make_response(jsonify(error="Name cannot be shorter than 2 characters"), 200)
+  
+  # pronoun validation
+  pronouns = data['pronouns']
+
+  for char in pronouns:
+    if char not in string.ascii_letters + '/':
+      return make_response(jsonify(error="Pronouns must only contain letters and '/'"), 200)
+
+  if len(pronouns) < 2:
+    return make_response(jsonify(error="Pronouns cannot be shorter than 2 characters"), 200)
+
+  # bio validation
+  bio = data['bio']
+  
+  if len(bio) > 300:
+    return make_response(jsonify(error="Bio cannot be longer than 300 characters"), 200)
+  
+  # age validation 
+  age = data['age']
+
+  if not isinstance(age, int):
+    return make_response(jsonify(error="Age must be a number"), 200)
+
+  if age < 18:
+    return make_response(jsonify(error="You need to be 18+ to register"), 200)
+
+  profile = Profile(
+    id=current_user.id,
+    name=name,
+    pronouns=pronouns,
+    age=age,
+    bio=bio,
+    casual_competitive_score=data['competitiveness']
+  )
+
+  db.session.add(profile)
+  db.session.commit()
+
+  return make_response(jsonify(error=""), 200)
+
+@app.route('/api/v1/profile', methods=['GET'])
+@login_required
+def getmyprofile():
+
+  profile = Profile.query.filter_by(id=current_user.id).first()
+
+  if profile:
+    pd = {
+      "name": profile.name,
+      "bio": profile.bio,
+      "pronouns": profile.pronouns,
+      "age": profile.age,
+      "competitiveness": profile.casual_competitive_score
+    }
+    return make_response(jsonify(error="", profile=pd), 200)
+
+  return make_response(jsonify(error="profile not found", profile={}), 200)
+
+@app.route('/api/v1/profile/<int:profileid>', methods=['GET'])
+@login_required
+def getprofile(profileid):
+
+  profile = Profile.query.filter_by(id=profileid).first()
+
+  if profile:
+    pd = {
+      "name": profile.name,
+      "bio": profile.bio,
+      "pronouns": profile.pronouns,
+      "age": profile.age,
+      "competitiveness": profile.casual_competitive_score}
+    return make_response(jsonify(error="", profile=pd), 200)
+
+  return make_response(jsonify(error="profile not found", profile={}), 200)
+  
+
+@app.errorhandler(500)
+def server_error(e):
+  return make_response(jsonify(error="oops... internal server error!"), 500)
+
+@app.errorhandler(401)
+def unauthorized_error(e):
+  return make_response(jsonify(error="unauthorized... are you logged in?"), 401)
+
 if __name__ == '__main__':
+  # with app.app_context():
+  #   db.create_all()
   app.run(use_reloader=True, port=5000, threaded=True)

@@ -28,7 +28,7 @@ const SignUpPage = () => {
         return () => {
         document.removeEventListener("keydown", listener);
         };
-    }, []);
+    });
         
 
     const SignUpContinueAction = async () => {

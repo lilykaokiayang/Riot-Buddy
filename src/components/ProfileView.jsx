@@ -41,22 +41,22 @@ const Ranks = styled.div`
   margin: 5px;
 `
 
-
-
 const ProfileView = props => {
 
   return (
     <>
       <Profile>
         <div>
-          <Username>{props.ProfileUsername}</Username>
-          <AgeGender>{props.ProfileAgeGender}</AgeGender>
+          <Username>{props.Username}</Username>
+          <AgeGender>{props.Age}</AgeGender>
+        
           <hr/>
           
-          <Pfp src={props.ProfilePfpURL} alt="pfp"/>
+          <Pfp src={props.PfpURL} alt="pfp"/>
           <hr/>
 
-          <Bio>{props.ProfileBio}</Bio>
+          <p>{props.Pronouns}</p>
+          <Bio>{props.Bio}</Bio>
           <hr/>
 
           <Ranks>
@@ -67,9 +67,6 @@ const ProfileView = props => {
             </ul>
           </Ranks>
 
-
-
-         
         </div>
         
       </Profile>
@@ -78,10 +75,16 @@ const ProfileView = props => {
 }
 
 ProfileView.propTypes = {
-  ProfileUsername: PropTypes.string,
-  ProfileAgeGender: PropTypes.string,
-  ProfileBio: PropTypes.string,
-  ProfilePfpURL: PropTypes.string,
+  Username: PropTypes.string,
+  Pronouns: PropTypes.string,
+  Age: PropTypes.number,
+  Bio: PropTypes.string,
+  PfpURL: PropTypes.string,
+}
+
+ProfileView.defaultProps = {
+  // this is a placeholder image for the profile picture
+  PfpURL: "https://as2.ftcdn.net/v2/jpg/01/18/03/35/1000_F_118033506_uMrhnrjBWBxVE9sYGTgBht8S5liVnIeY.jpg"
 }
 
 export default ProfileView
