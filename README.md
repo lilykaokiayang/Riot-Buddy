@@ -1,4 +1,15 @@
-### Riot Buddy API spec
+# Instructions
+
+Commands:
+
+```
+npm start
+flask --app riot_buddy run
+```
+
+http://127.0.0.1:3000/
+
+## Riot Buddy API spec
 
 - [x] POST /api/v1/create-account
   - description:
