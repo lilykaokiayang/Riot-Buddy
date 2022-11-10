@@ -9,7 +9,7 @@
     - string: password
   - response:
     - string: error (empty if no error)
-    - (header) ession cookie
+    - (header) session cookie
 
 - [x] GET /api/v1/login
   - description:
@@ -51,6 +51,20 @@
   - response:
     - string: error (empty if no error)
 
+- [x] GET /api/v1/profile
+  - description:
+    - used to retrieve another users profile. if no id is specified, retrieve the users own profile
+  - request:
+    - (header) session cookie
+    - (argument) integer: id
+  - response: 
+    - string: name
+    - string: bio
+    - string: pronouns
+    - integer: age
+    - integer: photo id (may be empty)
+    - integer: competitiveness (1-10)
+
 - [ ] PUT /api/v1/profile
   - description:
     - used to edit the users profile
@@ -64,31 +78,4 @@
     - integer: competitiveness (1-10)
   - response:
     - string: error (empty if no error)
-
-- [x] GET /api/v1/profile
-  - description:
-    - used to retrieve the users profile
-  - request:
-    - (header) session cookie
-  - response: 
-    - string: name
-    - string: bio
-    - string: pronouns
-    - integer: age
-    - integer: photo id (may be empty)
-    - integer: competitiveness (1-10)
-
-- [x] GET /api/v1/profile/<int:profileid>
-  - description:
-    - used to retrieve another users profile
-  - request:
-    - (header) session cookie
-    - integer: profileid (in url)
-  - response: 
-    - string: name
-    - string: bio
-    - string: pronouns
-    - integer: age
-    - integer: photo id (may be empty)
-    - integer: competitiveness (1-10)
 

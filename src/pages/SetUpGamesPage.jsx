@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SetUpGamesPage = () => {
+  const navigate = useNavigate()
+
   const [showVal, setValCheck] = useState(false);
   const [showLol, setLolCheck] = useState(false);
   const [showTft, setTftCheck] = useState(false);
@@ -22,8 +24,6 @@ const SetUpGamesPage = () => {
   const handleLorChange = () => {
     setLorCheck(current => !current);
   };
-
-  const navigate = useNavigate()
 
   const SetUpGameContinueAction = () => {
     navigate("/matchmaking")

@@ -17,19 +17,16 @@ const MatchmakingPage = () => {
 
   useEffect(() => {
     async function getProfile() {
-      const res = await fetch('/api/v1/profile?' + new URLSearchParams({
-        id: 7,
-    }))
+      const res = await fetch('/api/v1/profile?' + new URLSearchParams({id: 7}))
 
-      const data = await res.json()
+    const data = await res.json()
 
-      if (data.error) {
-        // user is logged out, send them back to login page
-        navigate('/log-in')
-      } else {
-        setProfile(data.profile)
-      }
-    }
+    if (data.error) {
+      // user is logged out, send them back to login page
+      navigate('/log-in')
+    } else {
+      setProfile(data.profile)
+    }}
     getProfile()
   }, [location, navigate])
 

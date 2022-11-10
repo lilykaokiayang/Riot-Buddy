@@ -29,17 +29,15 @@ const SignUpPage = () => {
         };
     });
         
-
     const SignUpContinueAction = async () => {
-
       // makes POST request to /api/v1/create-account with JSON from entered email, username & password
-    const res = await fetch('/api/v1/create-account', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ 
-          email: document.getElementById('email').value, 
-          username: document.getElementById('username').value, 
-          password: document.getElementById('password').value}
+      const res = await fetch('/api/v1/create-account', {
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ 
+            email: document.getElementById('email').value, 
+            username: document.getElementById('username').value, 
+            password: document.getElementById('password').value}
       )})
       
       // read /api/v1/create-account request response
@@ -63,7 +61,7 @@ const SignUpPage = () => {
             
             <TextInput LabelText="Enter Email" PlaceholderText="Email" Id="email" />
             <TextInput LabelText="Create Username" PlaceholderText="Username" Id="username" />
-            <TextInput LabelText="Create Password" PlaceholderText="Password" Id="password" />
+            <TextInput LabelText="Create Password" PlaceholderText="Password" Id="password" Type="password" />
 
             {/* this element only shows if getError has an error */}
             { getError && <InvalidText>{getError}</InvalidText>}
@@ -73,6 +71,5 @@ const SignUpPage = () => {
         </>
     )
 }
-
 
 export default SignUpPage

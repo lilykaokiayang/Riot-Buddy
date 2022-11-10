@@ -11,7 +11,6 @@ const RiotStyleLabel = styled.label`
 const CheckBox = props => {
   return (
     <>
-      
       <RiotStyleLabel htmlFor={props.Id}>
         <input type="checkbox" onChange={props.Action} value={props.Value}/>
         {props.DisplayText}

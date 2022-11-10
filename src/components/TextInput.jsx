@@ -8,19 +8,11 @@ const RiotStyleLabel = styled.label`
 `
 
 const TextInput = props => {
-
-  const getInputType = () => {
-    if (props.PlaceholderText === "Password") {
-      return "password"
-    }
-    return "text"
-  }
-
   return (
     <>
       <RiotStyleLabel htmlFor={props.Id}>
        {props.LabelText}
-        <input type={getInputType()} id={props.Id} placeholder={props.PlaceholderText} defaultValue={props.Value}/>
+        <input type={props.Type} id={props.Id} placeholder={props.PlaceholderText} defaultValue={props.Value}/>
       </RiotStyleLabel>
     </>
   )
@@ -30,10 +22,12 @@ TextInput.propTypes = {
   LabelText: PropTypes.string,
   PlaceholderText: PropTypes.string,
   Id: PropTypes.string,
-  Value: PropTypes.string
+  Value: PropTypes.string,
+  Type: PropTypes.string
 }
 
 TextInput.defaultProps = {
+  Type: "text",
   Value: ""
 }
 

@@ -18,10 +18,6 @@ const RiotSyleButton = styled.button`
   color: #cdbe91;
 
   border-color: #7a5c29;
-
-  //box-shadow: inset 0 0 2px #000000;
-  //border-image: linear-gradient(to bottom, #c8aa6d, #7a5c29);
-  /* border-image-slice: 1; */
   border-width: 2px;
   border-radius: 50%;
 

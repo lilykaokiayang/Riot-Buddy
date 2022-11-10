@@ -8,11 +8,10 @@ export const Logout = () => {
     float: 'right',
   }
 
-
   const handleLogout = async () => {
     const res = await fetch('/api/v1/logout')
     const data = await res.json()
-
+    
     if (data.error) {
       console.log('error logging out', data.error)
     } else {
@@ -24,6 +23,5 @@ export const Logout = () => {
     <Link style={linkStyle} onClick={handleLogout}>Log out</Link>
   )
 }
-
 
 export default Logout

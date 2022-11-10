@@ -22,7 +22,7 @@ def createprofile():
     return make_response(jsonify(error="Name cannot be longer than 50 characters"), 200)
   
   for char in name:
-    if char not in string.ascii_letters:
+    if char not in string.ascii_letters + " ":
       return make_response(jsonify(error="Name must only contain letters"), 200)
 
   if len(name) < 2:

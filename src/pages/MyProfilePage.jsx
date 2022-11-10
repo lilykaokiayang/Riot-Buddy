@@ -21,14 +21,14 @@ const MyProfilePage = () => {
       const data = await res.json()
 
       if (data.error) {
+        // user needs to log in again, session expired
         navigate('/log-in')
       } else {
-        // do if no error
         setProfile(data.profile)
       }
     }
     getProfile()
-  }, [location])
+  }, [location, navigate])
 
   return (
     <>

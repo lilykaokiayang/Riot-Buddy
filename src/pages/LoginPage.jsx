@@ -29,7 +29,6 @@ const LoginPage = () => {
     };
   });
 
-
   const SubmitLoginAction = async () => {
 
     // makes POST request to /api/v1/login with JSON from entered username & password
@@ -47,8 +46,7 @@ const LoginPage = () => {
     // if error = "", then their login was correct
     // if error is anything else, then their login was incorrect
     if (data.error) {
-      // clears the username and password form inputs
-      document.getElementById('username').value = ""
+      // clears password field
       document.getElementById('password').value = ""
 
       // triggers state update to show red invalid text
@@ -56,7 +54,7 @@ const LoginPage = () => {
     } else {
       // if username & password is correct, continue to main matchmaking page
       // cookie will be set
-      navigate('/matchmaking');
+      navigate('/matchmaking')
     }
   }
 
@@ -65,7 +63,7 @@ const LoginPage = () => {
       <h3>Enter your credentials</h3>
 
       <TextInput LabelText="Enter Username" PlaceholderText="Username" Id="username" />
-      <TextInput LabelText="Enter Password" PlaceholderText="Password" Id="password" />
+      <TextInput LabelText="Enter Password" PlaceholderText="Password" Id="password" Type="password"/>
 
       {/* this element only shows if isInvalid is true (by default its false) */}
       { isInvalid && <InvalidText>Username or password invalid. Please try again.</InvalidText>}

@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '../components/Button';
 import { useNavigate } from "react-router-dom";
 
-
 const WelcomePage = () => {
   const navigate = useNavigate();
 
@@ -17,7 +16,6 @@ const WelcomePage = () => {
       // otherwise, they dont have a valid session and need to be logged in
       navigate('/log-in')
     }
-    
   }
 
   const SignUpAction = () => {

@@ -46,10 +46,8 @@ const ProfileView = props => {
   return (
     <>
       <Profile>
-        <div>
           <Username>{props.Username}</Username>
           <AgeGender>{props.Age}</AgeGender>
-        
           <hr/>
           
           <Pfp src={props.PfpURL} alt="pfp"/>
@@ -62,13 +60,8 @@ const ProfileView = props => {
           <Ranks>
             <ul>
               <li>League of Legends: Diamond IV</li>
-              <li>VALORANT: Plat 3</li>
-              <li>Teamfight Tactics: Unranked</li>
             </ul>
           </Ranks>
-
-        </div>
-        
       </Profile>
     </>
   )

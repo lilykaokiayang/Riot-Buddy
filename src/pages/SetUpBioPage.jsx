@@ -13,6 +13,10 @@ const LabelBlock = styled.label`
   display: block;
 `
 
+const SliderBlock = styled.input`
+  display: 'block';
+`
+
 const SetUpBioPage = () => {
   const navigate = useNavigate()
   const [getError, setError] = useState("")
@@ -34,7 +38,6 @@ const SetUpBioPage = () => {
   });
 
   const SetUpBioContinueAction = async () => {
-    // TODO ADD API REQUEST
     const res = await fetch('/api/v1/profile', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -49,16 +52,11 @@ const SetUpBioPage = () => {
     const data = await res.json()
 
     if (data.error) {
-      // what to do if has error
       setError(data.error)
     } else {
-      // what to do if no error
+      // if no errors, allow user to continue to next page
       navigate('/setup/games')
     }
-  }
-
-  const sliderStyle = {
-    display: 'block',
   }
 
   return (
@@ -73,7 +71,7 @@ const SetUpBioPage = () => {
       <input type="file" id="pfp" name="pfp"></input>
     
       <LabelBlock htmlFor="competitiveness">How competitive are you?</LabelBlock>
-      <input type="range" min="1" max="10" style={sliderStyle} id="competitiveness" />
+      <SliderBlock type="range" min="1" max="10" id="competitiveness" />
       
       {/* this element only shows if getError has an error */}
       { getError && <InvalidText>{getError}</InvalidText>}
