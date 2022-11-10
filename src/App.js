@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/setup/bio" element={<SetUpBioPage/>} />
           <Route exact path="/setup/games" element={<SetUpGamesPage/>} />
 
-          <Route path="/profile" element={<MyProfilePage/>}  />
+          <Route exact path="/profile" element={<MyProfilePage/>}  />
           {/*<Route path="/profile/edit" element={<EditProfilePage/>} />*/}
 
         </Routes>

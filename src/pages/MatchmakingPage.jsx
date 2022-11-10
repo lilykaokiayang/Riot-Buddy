@@ -17,7 +17,9 @@ const MatchmakingPage = () => {
 
   useEffect(() => {
     async function getProfile() {
-      const res = await fetch('/api/v1/profile/7')
+      const res = await fetch('/api/v1/profile?' + new URLSearchParams({
+        id: 7,
+    }))
 
       const data = await res.json()
 
