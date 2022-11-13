@@ -24,7 +24,7 @@ def create_app():
 
 app = create_app()
 
-import riot_buddy.create_account, riot_buddy.login, riot_buddy.logout, riot_buddy.whoami, riot_buddy.profile_create, riot_buddy.profile_retrieve
+import riot_buddy.create_account, riot_buddy.login, riot_buddy.logout, riot_buddy.whoami, riot_buddy.profile_create, riot_buddy.profile_retrieve, riot_buddy.edit_profile
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

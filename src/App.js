@@ -6,7 +6,7 @@ import MatchmakingPage from './pages/MatchmakingPage';
 import SetUpBioPage from './pages/SetUpBioPage';
 import SetUpGamesPage from './pages/SetUpGamesPage';
 import MyProfilePage from './pages/MyProfilePage';
-//import EditProfilePage from './pages/EditProfilePage'
+import EditProfilePage from './pages/EditProfilePage'
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/setup/games" element={<SetUpGamesPage/>} />
 
           <Route exact path="/profile" element={<MyProfilePage/>}  />
-          {/*<Route path="/profile/edit" element={<EditProfilePage/>} />*/}
+          <Route exact path="/profile/edit" element={<EditProfilePage/>} />
 
         </Routes>
     </Router>

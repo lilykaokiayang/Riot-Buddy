@@ -3,7 +3,7 @@ from flask import make_response, jsonify, request
 from werkzeug.security import check_password_hash
 from datetime import datetime
 
-from riot_buddy import app
+from riot_buddy import app, db
 from .models import User
 
 
@@ -19,5 +19,8 @@ def login_account():
 
   login_user(user, remember=True)
   user.last_login = datetime.utcnow()
+
+  db.session.add(user)
+  db.session.commit()
   
   return make_response(jsonify(error=""), 200)

@@ -76,10 +76,10 @@ http://127.0.0.1:3000/
     - integer: photo id (may be empty)
     - integer: competitiveness (1-10)
 
-- [ ] PUT /api/v1/profile
+- [x] PUT /api/v1/profile
   - description:
     - used to edit the users profile
-  - request: (all optional except session cookie)
+  - request: 
     - (header) session cookie
     - string: name
     - string: bio
