@@ -8,10 +8,10 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-  app = Flask(__name__, static_folder='../build')
+  app = Flask(__name__, static_folder='../../build')
   app.secret_key = "hackbright"
 
-  db_name = "testing"
+  db_name = "riot_buddy"
   app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///{db_name}"
   app.config["SQLALCHEMY_ECHO"] = False
   app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -42,8 +42,4 @@ def server_error(e):
 def unauthorized_error(e):
   return make_response(jsonify(error="unauthorized... are you logged in?"), 401)
 
-
-if __name__ == '__main__':
-  # with app.app_context():
-  #   db.create_all()
-  app.run(use_reloader=True, port=5000, threaded=True)
+# app.run(use_reloader=True, port=5000, threaded=True)

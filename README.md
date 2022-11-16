@@ -1,13 +1,35 @@
 # Instructions
 
-Commands:
-
+Setup:
+```sh
+# install dependencies:
+pip install -r riot_buddy/requirements.txt
+# install app package:
+pip install -e riot_buddy
+# create postgresql table:
+createdb riot_buddy
+# initialize and fill database tables:
+python init-db.py
 ```
+
+Run development:
+```sh
 npm start
+flask --app riot_buddy --debug run
+```
+👉 http://127.0.0.1:3000/
+
+Run production:
+```sh
+npm run build
 flask --app riot_buddy run
 ```
 
-http://127.0.0.1:3000/
+👉 http://127.0.0.1:5000/
+
+## Application Flow Model
+
+![Flow Model](app.drawio.svg)
 
 ## Riot Buddy API spec
 
@@ -68,7 +90,8 @@ http://127.0.0.1:3000/
   - request:
     - (header) session cookie
     - (argument) integer: id
-  - response: 
+  - response:
+    - integer: profile id
     - string: name
     - string: bio
     - string: pronouns
@@ -79,7 +102,7 @@ http://127.0.0.1:3000/
 - [x] PUT /api/v1/profile
   - description:
     - used to edit the users profile
-  - request: 
+  - request:
     - (header) session cookie
     - string: name
     - string: bio

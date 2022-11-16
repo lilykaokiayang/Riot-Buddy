@@ -14,6 +14,7 @@ def getprofile():
 
   if profile:
     pd = {
+      "id": profile.id,
       "name": profile.name,
       "bio": profile.bio,
       "pronouns": profile.pronouns,

@@ -49,7 +49,7 @@ const ProfileView = props => {
           <Username>{props.Username}</Username>
           <AgeGender>{props.Age}</AgeGender>
           <hr/>
-          
+
           <Pfp src={props.PfpURL} alt="pfp"/>
           <hr/>
 
@@ -59,7 +59,7 @@ const ProfileView = props => {
 
           <Ranks>
             <ul>
-              <li>League of Legends: Diamond IV</li>
+              <li>Competitiveness Rating: {props.Competitiveness}</li>
             </ul>
           </Ranks>
       </Profile>
@@ -73,6 +73,7 @@ ProfileView.propTypes = {
   Age: PropTypes.number,
   Bio: PropTypes.string,
   PfpURL: PropTypes.string,
+  Competitiveness: PropTypes.number
 }
 
 ProfileView.defaultProps = {
