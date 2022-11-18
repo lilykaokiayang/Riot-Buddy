@@ -20,6 +20,7 @@ const SliderBlock = styled.input`
 const SetUpBioPage = () => {
   const navigate = useNavigate()
   const [getError, setError] = useState("")
+  const [image, setImage] = useState({})
 
   // from stackoverflow: https://stackoverflow.com/a/59147255
   // used to trigger submit function if the enter key is pressed
@@ -38,6 +39,26 @@ const SetUpBioPage = () => {
   });
 
   const SetUpBioContinueAction = async () => {
+    const formData = new FormData();
+
+    formData.append("pfp", image.img, image.img.name);
+
+    console.log(image);
+
+    const photores = await fetch('/api/v1/profile/photo', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const photodata = await photores.json()
+
+    if (photodata.error) {
+      setError(photodata.error)
+    } else {
+      // if no errors, allow user to continue to next page
+      console.log("no error")
+    }
+
     const res = await fetch('/api/v1/profile', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -59,6 +80,10 @@ const SetUpBioPage = () => {
     }
   }
 
+  const onFileChange = (event) => {
+    setImage({ img: event.target.files[0] });
+  };
+
   return (
     <>
       <h3>Set up your profile!</h3>
@@ -68,11 +93,11 @@ const SetUpBioPage = () => {
       <TextInput LabelText="Enter your age:" PlaceholderText="Age" Id="Age"/>
 
       <LabelBlock htmlFor="pfp">Upload a profile picture:</LabelBlock>
-      <input type="file" id="pfp" name="pfp"></input>
-    
+      <input type="file" id="pfp" name="pfp" onChange={onFileChange}></input>
+
       <LabelBlock htmlFor="competitiveness">How competitive are you?</LabelBlock>
       <SliderBlock type="range" min="1" max="10" id="competitiveness" />
-      
+
       {/* this element only shows if getError has an error */}
       { getError && <InvalidText>{getError}</InvalidText>}
       <Button Text="CONTINUE" Action={SetUpBioContinueAction}/>

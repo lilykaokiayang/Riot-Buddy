@@ -2,7 +2,9 @@
 
 Setup:
 ```sh
-# install dependencies:
+# install javascript dependencies:
+npm install
+# install python dependencies:
 pip install -r riot_buddy/requirements.txt
 # install app package:
 pip install -e riot_buddy
@@ -31,7 +33,11 @@ flask --app riot_buddy run
 
 ![Flow Model](app.drawio.svg)
 
-## Riot Buddy API spec
+## Database Schema (outdated)
+
+![Database Model](database.png)
+
+## API specification
 
 - [x] POST /api/v1/create-account
   - description:
@@ -113,3 +119,40 @@ flask --app riot_buddy run
   - response:
     - string: error (empty if no error)
 
+- [ ] PUT /api/v1/profile/photo
+  - description:
+    - used to overwrite the default profile picture with a user uploaded one
+  - request:
+    - (header) session cookie
+    - (form data) file: photo
+  - response
+    - string: error (empty if no error)
+
+- [ ] POST /api/v1/interact
+  - description:
+    - used to record if a user accepted or rejected a profile and check match status
+  - request:
+    - (header) session cookie
+    - integer: profile id
+    - bool: accepted
+  - response:
+    - string: error (empty if no error)
+    - bool: match
+
+- [ ] GET /api/v1/interact/next
+  - description:
+    - used to get the next profile id to interact with
+  - request:
+    - (header) session cookie
+  - response:
+    - string: error (empty if no error)
+    - integer: profile id
+
+- [ ] GET /api/v1/matches
+  - description:
+    - used to get a list of profile id's that the user has matched with
+  - request:
+    - (header) session cookie
+  - response:
+    - string: error (empty if no error)
+    - integer[]: profile id

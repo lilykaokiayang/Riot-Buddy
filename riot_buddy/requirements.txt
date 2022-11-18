@@ -8,3 +8,4 @@ SQLAlchemy==1.4.42
 Werkzeug==2.2.2
 psycopg2-binary==2.9.5
 Faker==15.3.2
+boto3==1.26.11
