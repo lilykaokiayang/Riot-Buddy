@@ -2,6 +2,8 @@ from flask import make_response, jsonify, request
 import string
 from flask_login import login_required, current_user
 
+from sqlalchemy.exc import IntegrityError
+
 from riot_buddy import app, db
 from .models import Profile
 
@@ -20,14 +22,14 @@ def createprofile():
 
   if len(name) > 50:
     return make_response(jsonify(error="Name cannot be longer than 50 characters"), 200)
-  
+
   for char in name:
     if char not in string.ascii_letters + " ":
       return make_response(jsonify(error="Name must only contain letters"), 200)
 
   if len(name) < 2:
     return make_response(jsonify(error="Name cannot be shorter than 2 characters"), 200)
-  
+
   # pronoun validation
   pronouns = data['pronouns']
 
@@ -40,11 +42,11 @@ def createprofile():
 
   # bio validation
   bio = data['bio']
-  
+
   if len(bio) > 300:
     return make_response(jsonify(error="Bio cannot be longer than 300 characters"), 200)
-  
-  # age validation 
+
+  # age validation
   age = data['age']
 
   if not isinstance(age, int):
@@ -62,7 +64,13 @@ def createprofile():
     casual_competitive_score=data['competitiveness']
   )
 
-  db.session.add(profile)
-  db.session.commit()
+  try:
+    db.session.add(profile)
+    db.session.commit()
+  except IntegrityError:
+    db.session.rollback()
+    return make_response(jsonify(error="account already has a profile associated with it"), 200)
+
+
 
   return make_response(jsonify(error=""), 200)

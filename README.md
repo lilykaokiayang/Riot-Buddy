@@ -1,27 +1,60 @@
 # Instructions
 
-Setup:
+#### Requirements:
+- python
+- npm
+- PostgreSQL
+- AWS account
+#### Setup:
+
+Create .env from template:
 ```sh
-# install javascript dependencies:
-npm install
-# install python dependencies:
-pip install -r riot_buddy/requirements.txt
-# install app package:
-pip install -e riot_buddy
-# create postgresql table:
-createdb riot_buddy
-# initialize and fill database tables:
-python init-db.py
+# copy example config to .env
+cp config-template .env
 ```
 
-Run development:
+Edit .env to add your AWS credentials:
+
+```ini
+DB_NAME="riot_buddy"
+DB_PORT=5432
+DB_HOST="localhost"
+
+APP_SECRET_KEY="spcQX4vdFhfyIlTXA2iibVRS3q17alj4"
+MAX_FILE_SIZE_IN_MB=16
+
+AWS_REGION="us-east-2"
+AWS_ACCESS_KEY_ID="access key id......"
+AWS_SECRET_ACCESS_KEY="secret access key................"
+
+PFP_BUCKET_NAME="riot-buddy-photos"
+```
+
+Install dependencies and run init.py script:
+
+```sh
+# install node dependencies:
+npm install
+
+# install python dependencies:
+pip install -r riot_buddy/requirements.txt
+
+# install app package:
+pip install -e riot_buddy
+
+# initialize cloud environment and database:
+# (this make take 2-10 minutes to fully deploy on AWS)
+python init.py
+```
+
+#### 🔬 Run development:
 ```sh
 npm start
 flask --app riot_buddy --debug run
 ```
 👉 http://127.0.0.1:3000/
 
-Run production:
+#### 🚀 Run production:
 ```sh
 npm run build
 flask --app riot_buddy run
@@ -85,7 +118,6 @@ flask --app riot_buddy run
     - string: bio
     - string: pronouns
     - integer: age
-    - integer: photo id (optional)
     - integer: competitiveness (1-10)
   - response:
     - string: error (empty if no error)
@@ -102,7 +134,7 @@ flask --app riot_buddy run
     - string: bio
     - string: pronouns
     - integer: age
-    - integer: photo id (may be empty)
+    - string: photo url (optional)
     - integer: competitiveness (1-10)
 
 - [x] PUT /api/v1/profile
@@ -114,12 +146,11 @@ flask --app riot_buddy run
     - string: bio
     - string: pronouns
     - integer: age
-    - integer: photo id
     - integer: competitiveness (1-10)
   - response:
     - string: error (empty if no error)
 
-- [ ] PUT /api/v1/profile/photo
+- [x] PUT /api/v1/profile/photo
   - description:
     - used to overwrite the default profile picture with a user uploaded one
   - request:

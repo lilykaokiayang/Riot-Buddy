@@ -20,7 +20,10 @@ const MyProfilePage = () => {
 
       const data = await res.json()
 
-      if (data.error) {
+      if (data.error === "profile not set up") {
+        // in case user has set up account but not a profile
+        navigate('/setup/bio')
+      } else if (data.error) {
         // user needs to log in again, session expired
         navigate('/log-in')
       } else {
@@ -33,15 +36,17 @@ const MyProfilePage = () => {
   return (
     <>
       <Logout/>
-      <Link style={linkStyle} to='/profile/edit'>Edit Profile</Link> 
-      <Link style={linkStyle} to='/matchmaking'>Matchmaking</Link> 
+      <Link style={linkStyle} to='/profile/edit'>Edit Profile</Link>
+      <Link style={linkStyle} to='/matchmaking'>Matchmaking</Link>
 
-      <ProfileView 
+      <ProfileView
         Username={profile.name}
         Pronouns={profile.pronouns}
         Age={profile.age}
-        Bio={profile.bio}/>
-      
+        Bio={profile.bio}
+        Competitiveness={profile.competitiveness}
+        PfpURL={profile.photo_url}/>
+
     </>
   )
 }

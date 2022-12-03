@@ -20,7 +20,7 @@ const SliderBlock = styled.input`
 const SetUpBioPage = () => {
   const navigate = useNavigate()
   const [getError, setError] = useState("")
-  const [image, setImage] = useState({})
+  const [image, setImage] = useState()
 
   // from stackoverflow: https://stackoverflow.com/a/59147255
   // used to trigger submit function if the enter key is pressed
@@ -39,25 +39,7 @@ const SetUpBioPage = () => {
   });
 
   const SetUpBioContinueAction = async () => {
-    const formData = new FormData();
 
-    formData.append("pfp", image.img, image.img.name);
-
-    console.log(image);
-
-    const photores = await fetch('/api/v1/profile/photo', {
-      method: 'POST',
-      body: formData,
-    })
-
-    const photodata = await photores.json()
-
-    if (photodata.error) {
-      setError(photodata.error)
-    } else {
-      // if no errors, allow user to continue to next page
-      console.log("no error")
-    }
 
     const res = await fetch('/api/v1/profile', {
       method: 'POST',
@@ -72,11 +54,30 @@ const SetUpBioPage = () => {
 
     const data = await res.json()
 
-    if (data.error) {
+    if (data.error === "account already has a profile associated with it") {
+      // edge case where user hits back button or refresh
+      navigate('/setup/games')
+    } else if (data.error) {
       setError(data.error)
     } else {
-      // if no errors, allow user to continue to next page
-      navigate('/setup/games')
+      const formData = new FormData();
+
+      if (image !== undefined) {
+        formData.append("pfp", image.img, image.img.name);
+
+        const photores = await fetch('/api/v1/profile/photo', {
+          method: 'PUT',
+          body: formData,
+        })
+
+        const photodata = await photores.json()
+
+        if (photodata.error) {
+          setError(photodata.error)
+        } else {
+          navigate('/setup/games')
+        }
+      }
     }
   }
 
@@ -93,7 +94,7 @@ const SetUpBioPage = () => {
       <TextInput LabelText="Enter your age:" PlaceholderText="Age" Id="Age"/>
 
       <LabelBlock htmlFor="pfp">Upload a profile picture:</LabelBlock>
-      <input type="file" id="pfp" name="pfp" onChange={onFileChange}></input>
+      <input type="file" id="pfp" name="pfp" accept="image/*" onChange={onFileChange}></input>
 
       <LabelBlock htmlFor="competitiveness">How competitive are you?</LabelBlock>
       <SliderBlock type="range" min="1" max="10" id="competitiveness" />

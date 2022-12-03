@@ -1,0 +1,12 @@
+DB_NAME="riot_buddy"
+DB_PORT=5432
+DB_HOST="localhost"
+
+APP_SECRET_KEY="spcQX4vdFhfyIlTXA2iibVRS3q17alj4"
+MAX_FILE_SIZE_IN_MB=16
+
+AWS_REGION="us-east-2"
+AWS_ACCESS_KEY_ID="access key id......"
+AWS_SECRET_ACCESS_KEY="secret access key................"
+
+PFP_BUCKET_NAME="riot-buddy-photos"

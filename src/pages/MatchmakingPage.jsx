@@ -54,7 +54,8 @@ const MatchmakingPage = () => {
         Pronouns={profile.pronouns}
         Age={profile.age}
         Bio={profile.bio}
-        Competitiveness={profile.competitiveness}/>
+        Competitiveness={profile.competitiveness}
+        PfpURL={profile.photo_url}/>
 
       <center>
         <CircularButton Text={"✖"} Action={DeclineButtonAction}/>
