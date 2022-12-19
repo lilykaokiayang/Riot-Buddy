@@ -11,3 +11,6 @@ SQLAlchemy==1.4.42
 Werkzeug==2.2.2
 psycopg2-binary==2.9.5
 Faker==15.3.2
+nanoid==2.0.0
+sendgrid==6.9.7
+twilio==7.16.0

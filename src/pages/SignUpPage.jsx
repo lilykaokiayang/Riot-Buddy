@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react'
-import styled from 'styled-components';
 import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 import { useNavigate } from 'react-router-dom'
+import { InvalidText, Table, Label} from '../style/RiotStyle'
 
-const InvalidText = styled.div`
-  font-size: 1rem;
-  color: red;
-`
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -28,21 +24,21 @@ const SignUpPage = () => {
         document.removeEventListener("keydown", listener);
         };
     });
-        
+
     const SignUpContinueAction = async () => {
       // makes POST request to /api/v1/create-account with JSON from entered email, username & password
       const res = await fetch('/api/v1/create-account', {
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify({ 
-            email: document.getElementById('email').value, 
-            username: document.getElementById('username').value, 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value,
+            username: document.getElementById('username').value,
             password: document.getElementById('password').value}
       )})
-      
+
       // read /api/v1/create-account request response
       const data = await res.json()
-  
+
       // if error = "", then their input was valid
       // if error is anything else, then their input was invalid
       if (data.error) {
@@ -57,17 +53,28 @@ const SignUpPage = () => {
 
     return (
         <>
-            <h3>Sign up now.</h3>
-            
-            <TextInput LabelText="Enter Email" PlaceholderText="Email" Id="email" />
-            <TextInput LabelText="Create Username" PlaceholderText="Username" Id="username" />
-            <TextInput LabelText="Create Password" PlaceholderText="Password" Id="password" Type="password" />
+            <h1>Sign up now.</h1>
+
+            <Table>
+              <tr>
+                <td><Label htmlFor='email'>Enter email:</Label></td>
+                <td><TextInput PlaceholderText="Email" Id="email" /></td>
+              </tr>
+              <tr>
+                <td><Label htmlFor='username'>Choose a username:</Label></td>
+                <td><TextInput PlaceholderText="Username" Id="username" /></td>
+              </tr>
+              <tr>
+                <td><Label htmlFor='password'>Choose a password: </Label></td>
+                <td><TextInput  PlaceholderText="Password" Id="password" Type="password" /></td>
+              </tr>
+            </Table>
 
             {/* this element only shows if getError has an error */}
             { getError && <InvalidText>{getError}</InvalidText>}
-            
+
             <Button Text="CONTINUE" Action={SignUpContinueAction}/>
-            
+
         </>
     )
 }

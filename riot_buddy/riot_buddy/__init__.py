@@ -7,11 +7,18 @@ from flask import Flask, send_from_directory, make_response, jsonify
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask.cli import AppGroup
+
+import click
+
+from twilio.rest import Client
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 load_dotenv()
+
+twilio_client = Client()
 
 s3 = boto3.client('s3',
   aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
@@ -29,6 +36,14 @@ db_port = os.getenv('DB_PORT', 5432)
 db_host = os.getenv('DB_HOST', 'localhost')
 
 max_mb = os.getenv('MAX_FILE_SIZE_IN_MB', 16)
+
+sg_api_key = os.getenv('SENDGRID_API_KEY')
+sg_sender = os.getenv('SENDGRID_SENDER')
+sg_enabled = (os.getenv('SENDGRID_ENABLED') in ['true', 'True', 'TRUE', 'yes', 'Yes', 'YES'])
+
+twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+twilio_api_key_sid = os.environ.get('TWILIO_API_KEY_SID')
+twilio_api_key_secret = os.environ.get('TWILIO_API_KEY_SECRET')
 
 # get list of s3 bucket names, if pfp bucket doesnt exist, dont start
 buckets = []
@@ -81,7 +96,37 @@ from riot_buddy import (
   profile_retrieve,
   edit_profile,
   photo_upload,
+  chat
 )
+
+chatrooms_cli = AppGroup('chatrooms', help='Manage your chat rooms.')
+app.cli.add_command(chatrooms_cli)
+
+@chatrooms_cli.command('create', help='create a chat room')
+@click.argument('name')
+def create(name):
+    conversation = None
+    for conv in twilio_client.conversations.conversations.list():
+        if conv.friendly_name == name:
+            conversation = conv
+            break
+    if conversation is not None:
+        print('Chat room already exists')
+    else:
+        twilio_client.conversations.conversations.create(friendly_name=name)
+
+@chatrooms_cli.command('delete', help='delete a chat room')
+@click.argument('name')
+def delete(name):
+    conversation = None
+    for conv in twilio_client.conversations.conversations.list():
+        if conv.friendly_name == name:
+            conversation = conv
+            break
+    if conversation is None:
+        print('Chat room not found')
+    else:
+        conversation.delete()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -99,4 +144,5 @@ def server_error(e):
 def unauthorized_error(e):
   return make_response(jsonify(error="unauthorized... are you logged in?"), 401)
 
-# app.run(use_reloader=True, port=5000, threaded=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True, port=5000)

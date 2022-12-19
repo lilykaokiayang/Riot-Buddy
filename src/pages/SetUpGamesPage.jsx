@@ -31,9 +31,9 @@ const SetUpGamesPage = () => {
 
   return (
     <>
-      <h3>Pick the Riot Games you play.</h3>
-      
-      <label htmlFor='region'>
+      <h1>Enter your Riot Username and pick the games you play.</h1>
+
+      {/* <label htmlFor='region'>
         Select your region
         <select name='region' id='region'>
           <option value="NA">North America</option>
@@ -41,20 +41,19 @@ const SetUpGamesPage = () => {
           <option value="AU">Australia</option>
           <option value="KR">Korea</option>
         </select>
-      </label>
+      </label> */}
+
+      <TextInput Id="ValUser" LabelText="Valorant Username" PlaceholderText="name#123"/>
 
       <CheckBox DisplayText='VALORANT' Value={showVal} Action={handleValChange}/>
-      {showVal && <TextInput Id="ValUser" LabelText="Valorant Username" PlaceholderText="name#123"/>}
 
       <CheckBox DisplayText='League of Legends' Value={showLol} Action={handleLolChange}/>
-      {showLol && <TextInput Id="LolUser" LabelText="League of Legends Username" PlaceholderText="name"/>}
 
       <CheckBox DisplayText='Teamfight Tactics' Value={showTft} Action={handleTftChange}/>
-      {showTft && <TextInput Id="TftUser" LabelText="Teamfight Tactics Username" PlaceholderText="name"/>}
 
       <CheckBox DisplayText='Legends of Runeterra' Value={showLor} Action={handleLorChange}/>
-      {showLor && <TextInput Id="LorUser" LabelText="Legends of Runeterra Username" PlaceholderText="name"/>}
-  
+
+
       <Button Text="CONTINUE" Action={SetUpGameContinueAction}/>
     </>
   )

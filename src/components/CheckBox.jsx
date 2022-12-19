@@ -1,20 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components';
-
-const RiotStyleLabel = styled.label`
-    display: block;
-    color: #000;
-    margin: 5px 5px;
-`
+import { Label } from '../style/RiotStyle';
 
 const CheckBox = props => {
   return (
     <>
-      <RiotStyleLabel htmlFor={props.Id}>
+      <Label htmlFor={props.Id}>
         <input type="checkbox" onChange={props.Action} value={props.Value}/>
         {props.DisplayText}
-      </RiotStyleLabel>
+      </Label>
     </>
   )
 }

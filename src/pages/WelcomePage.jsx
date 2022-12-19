@@ -24,7 +24,7 @@ const WelcomePage = () => {
 
   return (
     <>
-      <p>Start meeting new people today to play games with online!</p>
+      <h1>Start meeting new people today to play games with online!</h1>
       <Button Text="LOG IN" Action={LoginAction}/>
       <Button Text="SIGN UP" Action={SignUpAction}/>
     </>

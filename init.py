@@ -8,7 +8,7 @@ from faker import Faker
 from datetime import datetime, date
 import random
 
-from riot_buddy.models import User, Profile
+from riot_buddy.models import User, Profile, Photo
 from riot_buddy import (
   app,
   db,
@@ -169,8 +169,6 @@ def init_aws():
 def init_db():
   fake = Faker()
 
-
-
   output = subprocess.run(['dropdb', '-h', db_host, '-p', db_port, db_name], capture_output=True)
   print(f'dropped {db_name} database: {output.stderr}')
 
@@ -185,6 +183,7 @@ def init_db():
 
   users = []
   profiles = []
+  photos = []
 
   n = 100
 
@@ -218,14 +217,84 @@ def init_db():
       casual_competitive_score=random.randint(1, 10),
     ))
 
+    photos.append(Photo(
+          id=i,
+          type=1,
+          url=f'https://api.lorem.space/image/face?w=250&h=250&hash={i}',
+          uploaded=datetime.utcnow()))
+
   with app.app_context():
     db.session.add_all(users)
     db.session.add_all(profiles)
+    db.session.add_all(photos)
     db.session.commit()
 
   print(f"seeded database with {len(users)} users and {len(profiles)} profiles")
 
 
-print('this may take a while... go get your coffee!')
-init_db()
-init_aws()
+def init_demo():
+  fake = Faker()
+  fakeuser = fake.simple_profile()
+
+  output = subprocess.run(['dropdb', '-h', db_host, '-p', db_port, db_name], capture_output=True)
+  print(f'dropped {db_name} database: {output.stderr}')
+
+  output = subprocess.run(['createdb', '-h', db_host, '-p', db_port, db_name], capture_output=True)
+  print(f'created {db_name} database: {output.stderr}')
+
+  with app.app_context():
+    db.drop_all()
+    db.create_all()
+
+  users = []
+  profiles = []
+  photos = []
+
+  demo_users = [
+    {
+      'username': 'gaga',
+      'name': 'Lady Gaga',
+      'pronouns': 'she/her',
+      'age': 36,
+      'bio': 'i was in american horror story!',
+      'photo': ''
+    },
+  ]
+
+  for i in range(len(demo_users)):
+    users.append(User(
+        created_at=datetime.utcnow(),
+        username=demo_users[i]['username'],
+        email=fakeuser['mail'],
+        password=f"sha256$password",
+        last_login=datetime.utcnow(),
+      ))
+
+    profiles.append(Profile(
+      id=i+1,
+      name=demo_users[i]['name'],
+      pronouns=demo_users[i]['pronouns'],
+      age=demo_users[i]['age'],
+      bio=demo_users[i]['bio'],
+      casual_competitive_score=random.randint(1, 10),
+    ))
+
+    photos.append(Photo(
+          id=i+1,
+          type=1,
+          url=f'https://media.discordapp.net/attachments/576177986521399297/1053430588327088230/unknown.png',
+          uploaded=datetime.utcnow()))
+
+  with app.app_context():
+    db.session.add_all(users)
+    db.session.add_all(profiles)
+    db.session.add_all(photos)
+    db.session.commit()
+
+  print(f"seeded database with {len(users)} users and {len(profiles)} profiles")
+
+#print('this may take a while... go get your coffee!')
+#init_db()
+#init_aws()
+
+init_demo()

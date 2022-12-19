@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
@@ -7,13 +8,49 @@ import SetUpBioPage from './pages/SetUpBioPage';
 import SetUpGamesPage from './pages/SetUpGamesPage';
 import MyProfilePage from './pages/MyProfilePage';
 import EditProfilePage from './pages/EditProfilePage'
+import ChatPage from './pages/ChatPage'
+
+import styled from "styled-components";
+
+import left from './images/decorator-left.png';
+import right from './images/decorator-right.png';
+import hr from './images/decorator-hr.png';
+
+const Logo = styled.h1`
+  font-family: "Beaufort";
+  font-size: 5vh;
+  text-align: center;
+`
+
+const Dec = styled.img`
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 2vh;
+`
+
+const Hr = styled.img`
+  width: 100vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+`
+
+const LogoLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+`
 
 function App() {
 
   return (
     <Router>
-        <h1>Riot Buddy</h1>
-        <hr />
+      <Logo>
+        <Dec src={left} alt='left decorator'/>
+        <LogoLink href='/'> RIOT BUDDY</LogoLink>
+        <Dec src={right} alt='right decorator'/>
+      </Logo>
+        <Hr src={hr} alt='hr'/>
         <Routes>
           <Route exact path="/" element={<WelcomePage/>} />
 
@@ -27,6 +64,8 @@ function App() {
 
           <Route exact path="/profile" element={<MyProfilePage/>}  />
           <Route exact path="/profile/edit" element={<EditProfilePage/>} />
+
+          <Route exact path="/chat" element={<ChatPage/>} />
 
         </Routes>
     </Router>

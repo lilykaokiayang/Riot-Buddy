@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Button from '../components/Button'
+import NavBar from '../components/NavBar'
 import ProfileView from '../components/ProfileView'
-import Logout from '../components/Logout'
 
 const MyProfilePage = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
   const [profile, setProfile] = useState({})
-
-  const linkStyle = {
-    padding: 5 +'px',
-    float: 'right',
-  }
 
   useEffect(() => {
     async function getProfile() {
@@ -33,12 +29,14 @@ const MyProfilePage = () => {
     getProfile()
   }, [location, navigate])
 
+  const EditProfileButtonAction = () => {
+    navigate('/profile/edit')
+  }
+
   return (
     <>
-      <Logout/>
-      <Link style={linkStyle} to='/profile/edit'>Edit Profile</Link>
-      <Link style={linkStyle} to='/matchmaking'>Matchmaking</Link>
-
+      <NavBar/>
+      <Button Text="Edit" Action={EditProfileButtonAction}/>
       <ProfileView
         Username={profile.name}
         Pronouns={profile.pronouns}
@@ -46,7 +44,6 @@ const MyProfilePage = () => {
         Bio={profile.bio}
         Competitiveness={profile.competitiveness}
         PfpURL={profile.photo_url}/>
-
     </>
   )
 }

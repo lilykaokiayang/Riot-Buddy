@@ -10,3 +10,7 @@ AWS_ACCESS_KEY_ID="access key id......"
 AWS_SECRET_ACCESS_KEY="secret access key................"
 
 PFP_BUCKET_NAME="riot-buddy-photos"
+
+SENDGRID_ENABLED='true'
+SENDGRID_API_KEY="sendgrid api key............."
+SENDGRID_SENDER="sender email here....."

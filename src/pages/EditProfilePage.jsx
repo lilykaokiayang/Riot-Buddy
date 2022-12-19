@@ -1,21 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'
 
-const InvalidText = styled.div`
-  font-size: 1rem;
-  color: red;
-`
+import { Table, Label, InvalidText, Upload } from '../style/RiotStyle'
 
-const LabelBlock = styled.label`
-  display: block;
-`
-
-const SliderBlock = styled.input`
-  display: 'block';
-`
 
 const EditProfilePage = () => {
   const location = useLocation()
@@ -112,16 +101,32 @@ const EditProfilePage = () => {
   return (
     <>
       <h3>Edit your profile!</h3>
-      <TextInput LabelText="Enter your name:" PlaceholderText="Name" Id="Name" Value={profile.name}/>
-      <TextInput LabelText="Enter your pronouns:" PlaceholderText="pronouns" Id="Pronouns" Value={profile.pronouns}/>
-      <TextInput LabelText="Choose a good bio:" PlaceholderText="Bio" Id="Bio" Value={profile.bio}/>
-      <TextInput LabelText="Enter your age:" PlaceholderText="Age" Id="Age" Value={profile.age}/>
-
-      <LabelBlock htmlFor="pfp">Upload a profile picture:</LabelBlock>
-      <input type="file" id="pfp" name="pfp" accept="image/*" onChange={onFileChange}></input>
-
-      <LabelBlock htmlFor="competitiveness">How competitive are you?</LabelBlock>
-      <SliderBlock type="range" min="1" max="10" id="competitiveness"/>
+      <Table>
+        <tr>
+          <td><Label htmlFor='Name'>Enter your name:</Label></td>
+          <td><TextInput PlaceholderText="Name" Id="Name" Value={profile.name}/></td>
+        </tr>
+        <tr>
+          <td><Label htmlFor='Pronouns'>Enter your pronouns:</Label></td>
+          <td><TextInput PlaceholderText="pronouns" Id="Pronouns" Value={profile.pronouns}/></td>
+        </tr>
+        <tr>
+          <td><Label htmlFor='Bio'>Create a good bio:</Label></td>
+          <td><TextInput PlaceholderText="Bio" Id="Bio" Value={profile.bio}/></td>
+        </tr>
+        <tr>
+          <td><Label htmlFor='Age'>Enter your age:</Label></td>
+          <td><TextInput PlaceholderText="Age" Id="Age" Value={profile.age}/></td>
+        </tr>
+        <tr>
+          <td><Label htmlFor="pfp">Upload a profile picture: </Label></td>
+          <td><Upload type="file" id="pfp" name="pfp" accept="image/*" onChange={onFileChange}></Upload></td>
+        </tr>
+        <tr>
+          <td><Label htmlFor="competitiveness">How competitive are you?</Label></td>
+          <td><input type="range" min="1" max="10" id="competitiveness" /></td>
+        </tr>
+      </Table>
 
       {/* this element only shows if getError has an error */}
       { getError && <InvalidText>{getError}</InvalidText>}

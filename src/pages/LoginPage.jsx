@@ -2,12 +2,7 @@ import { useState, useEffect } from 'react'
 import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-
-const InvalidText = styled.div`
-  font-size: 1rem;
-  color: red;
-`
+import { InvalidText } from '../style/RiotStyle'
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -60,7 +55,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <h3>Enter your credentials</h3>
+      <h1>Welcome Back!</h1>
 
       <TextInput LabelText="Enter Username" PlaceholderText="Username" Id="username" />
       <TextInput LabelText="Enter Password" PlaceholderText="Password" Id="password" Type="password"/>

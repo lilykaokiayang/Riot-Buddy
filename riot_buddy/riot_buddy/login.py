@@ -13,7 +13,6 @@ def login_account():
   data = request.get_json()
   user = User.query.filter_by(username=data['username']).first()
 
-
   if not user or not check_password_hash(user.password, data['password']):
     return make_response(jsonify(error="invalid username or password"), 200)
 
@@ -22,5 +21,5 @@ def login_account():
 
   db.session.add(user)
   db.session.commit()
-  
+
   return make_response(jsonify(error=""), 200)

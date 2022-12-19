@@ -5,6 +5,7 @@
 - npm
 - PostgreSQL
 - AWS account
+- Twilio account
 #### Setup:
 
 Create .env from template:
@@ -13,7 +14,7 @@ Create .env from template:
 cp config-template .env
 ```
 
-Edit .env to add your AWS credentials:
+Edit .env to add your AWS & SendGrid credentials and config:
 
 ```ini
 DB_NAME="riot_buddy"
@@ -28,6 +29,10 @@ AWS_ACCESS_KEY_ID="access key id......"
 AWS_SECRET_ACCESS_KEY="secret access key................"
 
 PFP_BUCKET_NAME="riot-buddy-photos"
+
+SENDGRID_ENABLED='true'
+SENDGRID_API_KEY="sendgrid api key............."
+SENDGRID_SENDER="sender email here....."
 ```
 
 Install dependencies and run init.py script:

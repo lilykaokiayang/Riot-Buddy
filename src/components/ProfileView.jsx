@@ -4,11 +4,14 @@ import styled from 'styled-components'
 
 const Profile = styled.div`
   border: 2px solid black;
-  margin: 45px 37% 0px 37%;
+  margin: 15px 25vw 0px 25vw;
+  max-height: 80%;
   float: center;
   border-radius: 5px;
   position: relative;
-`;
+  border-color: #C8AA6E;
+  background-color: #5B5A56;
+`
 
 const Username = styled.div`
   margin: 10px;
@@ -29,6 +32,8 @@ const Pfp = styled.img`
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  max-height: 750px;
+  max-width: 500px;
 `
 
 const Bio = styled.p`

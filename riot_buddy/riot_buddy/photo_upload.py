@@ -14,18 +14,21 @@ from .models import Photo
 @app.route('/api/v1/profile/photo', methods=['PUT'])
 @login_required
 def upload_photo():
+    # gets the pfp from the request
     pfp = request.files['pfp']
 
     # only attempt upload if photo is present in upload
     if pfp:
       file = secure_filename(pfp.filename)
 
+      # get the extension of the uploaded file (.png, .jpeg, etc.)
       extension = pathlib.Path(file).suffix
-      if extension not in ['.jpg', '.jpeg', '.heic', '.webp']:
+
+      # make sure its a valid extension
+      if extension not in ['.png', '.jpg', '.jpeg', '.heic', '.webp']:
         return make_response(jsonify(error="error uploading photo: file extension not allowed"), 200)
 
-
-      # generate unique file name and use original file extension
+      # generate random file name and use original file extension
       path = f'{nanoid.generate()}{extension}'
 
       # upload the file
@@ -42,7 +45,7 @@ def upload_photo():
           url=f'https://{cloudfront_url}/{path}',
           uploaded=datetime.utcnow())
       else:
-        # if Photo exists for user, delete old file and update database
+        # if Photo exists for user, delete the old file and update the database with new url
         s3.delete_object(Bucket=bucket_name, Key=pathlib.Path(photo.url).name)
         photo.type = 1
         photo.url = f'https://{cloudfront_url}/{path}'
